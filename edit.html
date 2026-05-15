@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✏️ 编辑表白内容</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            font-family: 'Noto Serif SC', serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #c44569;
+            font-family: 'Dancing Script', cursive;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #fecfef;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Noto Serif SC', serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .photo-preview {
+            margin-top: 10px;
+            max-width: 200px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .photo-preview.show {
+            display: block;
+        }
+
+        .music-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .music-option {
+            padding: 10px 20px;
+            background: #fecfef;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .music-option:hover {
+            background: #ffd6e6;
+        }
+
+        .music-option.selected {
+            background: #ff6b9d;
+            color: white;
+            border-color: #c44569;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #555;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .success-message {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            color: #4caf50;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .preview-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #ff6b9d;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .preview-link:hover {
+            color: #c44569;
+            text-decoration: underline;
+        }
+
+        .date-picker {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #fecfef;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .date-picker:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>✏️ 编辑表白内容</h1>
+        
+        <form id="editForm">
+            <div class="form-group">
+                <label for="title">表白标题（称呼）</label>
+                <input type="text" id="title" placeholder="例如：亲爱的、宝贝">
+                <small>将显示在页面顶部的称呼</small>
+            </div>
+
+            <div class="form-group">
+                <label for="message">表白正文</label>
+                <textarea id="message" placeholder="写下你想说的话...&#10;换行用回车键"></textarea>
+                <small>支持换行，会自动转换为换行显示</small>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">照片链接</label>
+                <input type="url" id="photo" placeholder="输入照片URL地址">
+                <img id="photoPreview" class="photo-preview" alt="预览">
+                <small>可以上传照片到图床获取链接</small>
+            </div>
+
+            <div class="form-group">
+                <label for="signature">签名</label>
+                <input type="text" id="signature" placeholder="例如：爱你的人 💌">
+                <small>显示在页面底部的签名</small>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">相恋日期（倒计时）</label>
+                <input type="date" id="startDate" class="date-picker">
+                <small>用于计算在一起的天数</small>
+            </div>
+
+            <div class="form-group">
+                <label>背景音乐</label>
+                <div class="music-options" id="musicOptions">
+                    <div class="music-option" data-url="" data-name="无背景音乐">
+                        🎵 无背景音乐
+                    </div>
+                    <div class="music-option" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-name="浪漫钢琴曲">
+                        🎹 浪漫钢琴曲
+                    </div>
+                    <div class="music-option" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-name="温馨音乐">
+                        🎻 温馨音乐
+                    </div>
+                    <div class="music-option" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" data-name="甜蜜旋律">
+                        🎶 甜蜜旋律
+                    </div>
+                </div>
+                <input type="hidden" id="customMusicUrl">
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" id="resetBtn">重置</button>
+                <button type="submit" class="btn btn-primary">保存更改</button>
+            </div>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            ✅ 保存成功！点击下方链接预览效果
+        </div>
+
+        <a href="index.html" target="_blank" class="preview-link" id="previewLink">
+            👀 预览表白页面
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedData();
+            initMusicOptions();
+            initPhotoPreview();
+            initForm();
+        });
+
+        function loadSavedData() {
+            document.getElementById('title').value = localStorage.getItem('customTitle') || '';
+            document.getElementById('message').value = localStorage.getItem('customMessage') || '';
+            document.getElementById('photo').value = localStorage.getItem('customPhoto') || '';
+            document.getElementById('signature').value = localStorage.getItem('customSignature') || '';
+            document.getElementById('startDate').value = localStorage.getItem('loveStartDate') || '2024-02-14';
+            document.getElementById('customMusicUrl').value = localStorage.getItem('customMusicUrl') || '';
+            
+            const savedMusic = localStorage.getItem('customMusicUrl');
+            const musicOptions = document.querySelectorAll('.music-option');
+            musicOptions.forEach(option => {
+                if (option.dataset.url === savedMusic) {
+                    option.classList.add('selected');
+                }
+            });
+
+            if (document.getElementById('photo').value) {
+                document.getElementById('photoPreview').src = document.getElementById('photo').value;
+                document.getElementById('photoPreview').classList.add('show');
+            }
+        }
+
+        function initMusicOptions() {
+            const musicOptions = document.querySelectorAll('.music-option');
+            musicOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    musicOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    document.getElementById('customMusicUrl').value = this.dataset.url;
+                });
+            });
+        }
+
+        function initPhotoPreview() {
+            const photoInput = document.getElementById('photo');
+            const photoPreview = document.getElementById('photoPreview');
+
+            photoInput.addEventListener('input', function() {
+                if (this.value) {
+                    photoPreview.src = this.value;
+                    photoPreview.classList.add('show');
+                } else {
+                    photoPreview.classList.remove('show');
+                }
+            });
+        }
+
+        function initForm() {
+            const form = document.getElementById('editForm');
+            const successMessage = document.getElementById('successMessage');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                localStorage.setItem('customTitle', document.getElementById('title').value);
+                localStorage.setItem('customMessage', document.getElementById('message').value);
+                localStorage.setItem('customPhoto', document.getElementById('photo').value);
+                localStorage.setItem('customSignature', document.getElementById('signature').value);
+                localStorage.setItem('loveStartDate', document.getElementById('startDate').value);
+                localStorage.setItem('customMusicUrl', document.getElementById('customMusicUrl').value);
+
+                successMessage.classList.add('show');
+                
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 3000);
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                form.reset();
+                document.getElementById('customMusicUrl').value = '';
+                document.getElementById('photoPreview').classList.remove('show');
+                
+                const musicOptions = document.querySelectorAll('.music-option');
+                musicOptions.forEach(opt => opt.classList.remove('selected'));
+                musicOptions[0].classList.add('selected');
+                
+                localStorage.clear();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 浪漫表白 - 我爱你</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="gradient-bg"></div>
+        <div class="stars"></div>
+        <div class="hearts-container"></div>
+        <div class="petals-container"></div>
+    </div>
+
+    <div class="music-controls">
+        <button class="music-btn" id="musicBtn" title="播放音乐">
+            <span class="music-icon">🎵</span>
+        </button>
+        <audio id="backgroundMusic" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="edit-link">
+        <a href="edit.html" target="_blank" class="edit-btn">✏️ 编辑内容</a>
+    </div>
+
+    <div class="container">
+        <div class="lock-screen" id="lockScreen">
+            <div class="lock-icon">🔒</div>
+            <p class="lock-text">滑动解锁表白</p>
+            <div class="slider">
+                <div class="slider-thumb" id="sliderThumb">👉</div>
+            </div>
+        </div>
+
+        <div class="content" id="content">
+            <div class="title-section">
+                <h1 class="main-title" id="mainTitle">亲爱的</h1>
+                <div class="heart-decoration">💕</div>
+            </div>
+
+            <div class="message-section">
+                <p class="message" id="messageContent">
+                    从遇见你那一刻起，我的心就被你深深吸引。<br>
+                    你的笑容如春日暖阳，照亮我生命的每一个角落。<br>
+                    我想告诉你：<br>
+                    <span class="highlight">我喜欢你！</span>
+                </p>
+            </div>
+
+            <div class="photo-section">
+                <div class="photo-frame" id="photoFrame">
+                    <img id="lovePhoto" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=romantic%20couple%20sunset%20beach%20love&image_size=portrait_4_3" alt="我们的回忆">
+                </div>
+            </div>
+
+            <div class="interactive-section">
+                <button class="reveal-btn" id="revealBtn">💝 点击查看隐藏消息</button>
+                <div class="hidden-message" id="hiddenMessage">
+                    <p>每一天都想见到你<br>
+                    每一刻都想陪伴你<br>
+                    余生很长，我想和你一起走下去 ❤️</p>
+                </div>
+            </div>
+
+            <div class="hearts-click-section">
+                <p class="click-hint">点击下方爱心改变颜色 💗</p>
+                <div class="clickable-hearts">
+                    <span class="click-heart" id="heart1">❤️</span>
+                    <span class="click-heart" id="heart2">🧡</span>
+                    <span class="click-heart" id="heart3">💛</span>
+                    <span class="click-heart" id="heart4">💚</span>
+                    <span class="click-heart" id="heart5">💙</span>
+                </div>
+            </div>
+
+            <div class="countdown-section">
+                <p class="countdown-text">我们在一起已经</p>
+                <div class="countdown" id="countdown">
+                    <span class="countdown-item">
+                        <span class="countdown-number" id="days">0</span>
+                        <span class="countdown-label">天</span>
+                    </span>
+                    <span class="countdown-item">
+                        <span class="countdown-number" id="hours">0</span>
+                        <span class="countdown-label">时</span>
+                    </span>
+                    <span class="countdown-item">
+                        <span class="countdown-number" id="minutes">0</span>
+                        <span class="countdown-label">分</span>
+                    </span>
+                    <span class="countdown-item">
+                        <span class="countdown-number" id="seconds">0</span>
+                        <span class="countdown-label">秒</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p class="signature">爱你的人 💌</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
